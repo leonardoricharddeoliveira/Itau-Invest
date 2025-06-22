@@ -19,7 +19,7 @@
         // Construtor padrão
         public Posicao() { }
 
-        // Construtor para criação (sem ID)
+        // Construtor para criação 
         public Posicao(int idUsuario, int idAtivo, int quantidade, decimal precoMedio, decimal pnl)
         {
             IdUsuario = idUsuario;
@@ -29,7 +29,7 @@
             PnL = pnl;
         }
 
-        // Construtor completo (com ID)
+        // Construtor completo 
         public Posicao(int idPosicao, int idUsuario, int idAtivo, int quantidade, decimal precoMedio, decimal pnl)
         {
             IdPosicao = idPosicao;
