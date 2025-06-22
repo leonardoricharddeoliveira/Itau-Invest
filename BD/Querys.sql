@@ -46,7 +46,7 @@ CREATE TABLE posicoes (
     id_ativo INT NOT NULL,
     quantidade INT NOT NULL,
     preco_medio DECIMAL(10,2) NOT NULL,
-    p_l DECIMAL(10,2) NOT NULL,
+    p_l DECIMAL(10,2) NOT NULL, -- Lucro/Prejuizo
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario),
     FOREIGN KEY (id_ativo) REFERENCES ativos(id_ativo)
 );
@@ -57,8 +57,8 @@ ON operacoes (id_usuario, id_ativo, data_hora);
 
 
 -- Select otimizado
-SELECT * FROM operacoes WHERE id_usuario =  
-AND id_ativo = 
+SELECT * FROM operacoes WHERE id_usuario = ? 
+AND id_ativo = ?
 AND data_hora >= NOW() - INTERVAL 30 DAY;
                         
 -- Trigger de Atualização 
