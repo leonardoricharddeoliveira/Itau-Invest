@@ -10,6 +10,14 @@
         // Construtor padrão 
         public Usuario() { }
 
+        // Construtor para adicionar usuario
+        public Usuario(string nome, string email, decimal percentualCorretagem)
+        {
+            Nome = nome;
+            Email = email;
+            PercentualCorretagem = percentualCorretagem;
+        }
+
         // Construtor completo 
         public Usuario(int idUsuario, string nome, string email, decimal percentualCorretagem)
         {
