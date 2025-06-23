@@ -1,22 +1,30 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Itau_invest.Models
 {
+    [Table("cotacoes")]
     public class Cotacao
     {
+        [Key]
+        [Column("id_cotacao")]
         public int IdCotacao { get; set; }
 
-        // Chave estrangeira: Ativo
+        [Column("id_ativo")]
         public int IdAtivo { get; set; }
         public Ativo Ativo { get; set; }
 
+        [Column("preco_unit")]
         public decimal PrecoUnitario { get; set; }
+
+        [Column("data_hora")]
         public DateTime DataHora { get; set; }
 
         // Contrutor Padrão
         public Cotacao() { }
 
-        // Contrutor para adicionar cotação
+        // Contrutor para criação 
         public Cotacao(int idAtivo, decimal precoUnitario, DateTime dataHora)
         {
             IdAtivo = idAtivo;
@@ -24,7 +32,7 @@ namespace Itau_invest.Models
             DataHora = dataHora;
         }
 
-        //Contrutor completo
+        // Construtor completo
         public Cotacao(int idCotacao, int idAtivo, decimal precoUnitario, DateTime dataHora)
         {
             IdCotacao = idCotacao;
@@ -32,6 +40,5 @@ namespace Itau_invest.Models
             PrecoUnitario = precoUnitario;
             DataHora = dataHora;
         }
-
     }
 }
