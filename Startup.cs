@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Itau_invest.Data;
 using Microsoft.Extensions.Hosting;
+using Itau_invest.Services;
 
 namespace Itau_invest
 {
@@ -28,6 +29,7 @@ namespace Itau_invest
                     Configuration.GetConnectionString("DefaultConnection"),
                     ServerVersion.AutoDetect(Configuration.GetConnectionString("DefaultConnection"))
                 ));
+            services.AddScoped<UsuarioService>();
         }
 
         // Configura o pipeline HTTP
