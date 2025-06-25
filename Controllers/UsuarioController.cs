@@ -1,9 +1,7 @@
-﻿using Itau_invest.Data;
-using Itau_invest.Models;
+﻿using Itau_invest.Models;
+using Itau_invest.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Itau_invest.Controllers
@@ -11,68 +9,54 @@ namespace Itau_invest.Controllers
     [ApiController]
     [Route("api/[controller]")]
     public class UsuarioController : ControllerBase
-
     {
-        // Recebe a conexão com o banco
-        private readonly AppDbContext _context;
+        private readonly UsuarioService _usuarioService;
 
-        public UsuarioController(AppDbContext context)
+        public UsuarioController(UsuarioService usuarioService)
         {
-            _context = context;
+            _usuarioService = usuarioService;
         }
 
-        // GET: api/Usuario
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
+        public async Task<ActionResult<IEnumerable<Usuario>>> GetAll()
         {
-            return await _context.Usuarios.ToListAsync();
+            var usuarios = await _usuarioService.GetAllAsync();
+            return Ok(usuarios);
         }
 
-        // GET: api/Usuario/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Usuario>> GetUsuario(int id)
+        public async Task<ActionResult<Usuario>> GetById(int id)
         {
-            var usuario = await _context.Usuarios.FindAsync(id);
-
+            var usuario = await _usuarioService.GetByIdAsync(id);
             if (usuario == null)
                 return NotFound();
 
-            return usuario;
+            return Ok(usuario);
         }
 
-        // POST: api/Usuario
         [HttpPost]
-        public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
+        public async Task<ActionResult<Usuario>> Create(Usuario usuario)
         {
-            _context.Usuarios.Add(usuario);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetUsuario), new { id = usuario.IdUsuario }, usuario);
+            var novoUsuario = await _usuarioService.CreateAsync(usuario);
+            return CreatedAtAction(nameof(GetById), new { id = novoUsuario.IdUsuario }, novoUsuario);
         }
 
-        // PUT: api/Usuario/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUsuario(int id, Usuario usuario)
+        public async Task<IActionResult> Update(int id, Usuario usuario)
         {
-            if (id != usuario.IdUsuario)
+            var atualizado = await _usuarioService.UpdateAsync(id, usuario);
+            if (!atualizado)
                 return BadRequest();
-
-            _context.Entry(usuario).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        // DELETE: api/Usuario/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUsuario(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var usuario = await _context.Usuarios.FindAsync(id);
-            if (usuario == null)
+            var deletado = await _usuarioService.DeleteAsync(id);
+            if (!deletado)
                 return NotFound();
-
-            _context.Usuarios.Remove(usuario);
-            await _context.SaveChangesAsync();
 
             return NoContent();
         }
