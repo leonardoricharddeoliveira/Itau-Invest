@@ -30,6 +30,8 @@ namespace Itau_invest
                     ServerVersion.AutoDetect(Configuration.GetConnectionString("DefaultConnection"))
                 ));
             services.AddScoped<UsuarioService>();
+            services.AddScoped<AtivoService>();
+            services.AddScoped<OperacaoService>();
         }
 
         // Configura o pipeline HTTP
