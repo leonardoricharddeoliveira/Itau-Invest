@@ -32,6 +32,7 @@ namespace Itau_invest
             services.AddScoped<UsuarioService>();
             services.AddScoped<AtivoService>();
             services.AddScoped<OperacaoService>();
+            services.AddScoped<CotacaoService>();
         }
 
         // Configura o pipeline HTTP
