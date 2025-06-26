@@ -1,0 +1,19 @@
+name: Atualizar Fork
+
+on:
+  schedule:
+    - cron: '0 4 * * *'  # roda todo dia às 04h UTC (01h no Brasil)
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Atualizar fork com o repositório original
+        uses: tgymnich/fork-sync@v1.8
+        with:
+          owner: Henrique-Capitani
+          repo: Itau-Invest
+          base: main
+          head: main
+          token: ${{ secrets.GITHUB_TOKEN }}
