@@ -12,7 +12,7 @@ namespace Itau_invest.Controllers
     {
         private readonly PosicaoService _posicaoService;
 
-        public PosicaoController(PosicaoService posicaoService )
+        public PosicaoController(PosicaoService posicaoService)
         {
             _posicaoService = posicaoService;
         }
@@ -59,6 +59,35 @@ namespace Itau_invest.Controllers
                 return NotFound();
 
             return NoContent();
+        }
+
+        // Novos endpoints para cálculos
+        [HttpGet("preco-medio/{idUsuario}/{idAtivo}")]
+        public async Task<ActionResult<decimal>> CalcularPrecoMedio(int idUsuario, int idAtivo)
+        {
+            var precoMedio = await _posicaoService.CalcularPrecoMedioPonderado(idUsuario, idAtivo);
+            return Ok(precoMedio);
+        }
+
+        [HttpGet("quantidade/{idUsuario}/{idAtivo}")]
+        public async Task<ActionResult<decimal>> CalcularQuantidadeAtual(int idUsuario, int idAtivo)
+        {
+            var qtd = await _posicaoService.CalcularQuantidadeAtual(idUsuario, idAtivo);
+            return Ok(qtd);
+        }
+
+        [HttpGet("pl/{idUsuario}/{idAtivo}")]
+        public async Task<ActionResult<decimal>> CalcularPL(int idUsuario, int idAtivo)
+        {
+            var pl = await _posicaoService.CalcularPL(idUsuario, idAtivo);
+            return Ok(pl);
+        }
+
+        [HttpGet("corretagem/{idUsuario}")]
+        public async Task<ActionResult<decimal>> CalcularCorretagem(int idUsuario)
+        {
+            var total = await _posicaoService.CalcularTotalCorretagem(idUsuario);
+            return Ok(total);
         }
     }
 }
